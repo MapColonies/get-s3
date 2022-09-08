@@ -9,7 +9,6 @@ async function getSizeOfModel(boss: PgBoss, model: string): Promise<number> {
 
 async function getKeyFromQueue(boss: PgBoss, model: string): Promise<string> {
   const job = await boss.fetch(`${model}`);
-
   return (job?.data as ModelKey).key;
 }
 

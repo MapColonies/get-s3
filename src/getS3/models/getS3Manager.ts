@@ -1,7 +1,7 @@
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { inject, injectable } from 'tsyringe';
-import { NodeHttpHandler } from '@aws-sdk/node-http-handler'
+import { NodeHttpHandler } from '@aws-sdk/node-http-handler';
 import { S3Client } from '@aws-sdk/client-s3';
 import PgBoss from 'pg-boss';
 import { SERVICES } from '../../common/constants';
@@ -18,9 +18,8 @@ export class GetS3Manager {
       accessKeyId: this.config.get<string>('s3.awsAccessKeyId'),
       secretAccessKey: this.config.get('s3.awsSecretAccessKey'),
     },
-    requestHandler: new NodeHttpHandler({connectionTimeout: 3000}),
+    requestHandler: new NodeHttpHandler({ connectionTimeout: 3000 }),
     maxAttempts: 3,
-    
   });
 
   private readonly boss = new PgBoss(this.config.get<string>('postgres'));
@@ -42,7 +41,6 @@ export class GetS3Manager {
       let currentNumOfFiles = 0;
       let expectedNumOfFiles = null;
       let isGotModelSize = false;
-      
 
       // const interval = setInterval(function(){
       //   logger.info({
@@ -50,7 +48,7 @@ export class GetS3Manager {
       //       model: model,
       //       key: key,
       //     });
-        
+
       // }, this.config.get<string>('timeInterval'))
 
       while (expectedNumOfFiles != currentNumOfFiles) {
@@ -59,7 +57,6 @@ export class GetS3Manager {
           const data = await getDataS3(this.s3Client, key);
           await postFromS3ToS3(this.s3Client, key, data);
 
-          
           currentNumOfFiles++;
 
           key = await getKeyFromQueue(this.boss, model);
@@ -67,6 +64,10 @@ export class GetS3Manager {
         if (!isGotModelSize) {
           expectedNumOfFiles = await getSizeOfModel(this.boss, model);
           if (expectedNumOfFiles) {
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+            if (expectedNumOfFiles == -1) {
+              throw new Error('Problems with list');
+            }
             isGotModelSize = true;
           }
         }
