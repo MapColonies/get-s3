@@ -24,5 +24,18 @@
         "options": null
       }
     }
-  }
+  },
+  "s3": {
+    "awsAccessKeyId": "minioadmin",
+    "awsSecretAccessKey": "minioadmin",
+    "endPoint": "http://127.0.0.1:9000",
+    "forcePathStyle": true,
+    "bucket": "3dtiles",
+    "destinationBucket": "3dtiles-destination"
+  },
+  "3dir": "../3D-Models",
+  "source": "S3",
+  "buffer": 20,
+  "postgres": "postgres://postgres:postgres@127.0.0.1/s3-key",
+  "timeInterval": 10000
 }

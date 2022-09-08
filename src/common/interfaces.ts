@@ -9,3 +9,15 @@ export interface OpenApiConfig {
   jsonPath: string;
   uiPath: string;
 }
+
+export interface PathParams {
+  modelPath: string;
+}
+
+export interface ModelSize extends Object {
+  size: number;
+}
+
+export interface ModelKey extends Object {
+  key: string;
+}
