@@ -66,7 +66,7 @@ export class GetS3Manager {
           if (expectedNumOfFiles) {
             // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             if (expectedNumOfFiles == -1) {
-              throw new Error('Problems with list');
+              return 'Problems with list';
             }
             isGotModelSize = true;
           }
