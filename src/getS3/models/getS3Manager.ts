@@ -1,7 +1,7 @@
+// import { NodeHttpHandler } from '@aws-sdk/node-http-handler';
 import { Logger } from '@map-colonies/js-logger';
 import { IConfig } from 'config';
 import { inject, injectable } from 'tsyringe';
-import { NodeHttpHandler } from '@aws-sdk/node-http-handler';
 import { S3Client } from '@aws-sdk/client-s3';
 import PgBoss from 'pg-boss';
 import { SERVICES } from '../../common/constants';
@@ -18,7 +18,7 @@ export class GetS3Manager {
       accessKeyId: this.config.get<string>('s3.awsAccessKeyId'),
       secretAccessKey: this.config.get('s3.awsSecretAccessKey'),
     },
-    requestHandler: new NodeHttpHandler({ connectionTimeout: 3000 }),
+    // requestHandler: new NodeHttpHandler({ connectionTimeout: 3000 }),
     maxAttempts: 3,
   });
 
@@ -30,11 +30,11 @@ export class GetS3Manager {
 
   public async getListManager(model: string): Promise<string> {
     try {
-      // this.logger.info({
-      //   msg: 'Getting the model size',
-      //   model: model,
-      //   bucket: this.config.get<string>('s3.bucket'),
-      // });
+      this.logger.info({
+        msg: 'Getting the model',
+        model: model,
+        bucket: this.config.get<string>('s3.bucket'),
+      });
 
       await this.boss.start();
 
